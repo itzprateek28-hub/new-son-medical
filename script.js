@@ -87,11 +87,59 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Mobile menu toggle (if needed)
+// Mobile menu toggle
 function toggleMobileMenu() {
     const nav = document.querySelector('.nav');
+    const toggle = document.querySelector('.mobile-menu-toggle i');
+    
     nav.classList.toggle('mobile-active');
+    
+    // Change hamburger to X and vice versa
+    if (nav.classList.contains('mobile-active')) {
+        toggle.classList.remove('fa-bars');
+        toggle.classList.add('fa-times');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+    } else {
+        toggle.classList.remove('fa-times');
+        toggle.classList.add('fa-bars');
+        document.body.style.overflow = 'auto';
+    }
 }
+
+// Close mobile menu when clicking on a link
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const nav = document.querySelector('.nav');
+            const toggle = document.querySelector('.mobile-menu-toggle i');
+            
+            if (nav.classList.contains('mobile-active')) {
+                nav.classList.remove('mobile-active');
+                toggle.classList.remove('fa-times');
+                toggle.classList.add('fa-bars');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        const nav = document.querySelector('.nav');
+        const toggle = document.querySelector('.mobile-menu-toggle');
+        const logo = document.querySelector('.logo');
+        
+        if (nav.classList.contains('mobile-active') && 
+            !nav.contains(e.target) && 
+            !toggle.contains(e.target) && 
+            !logo.contains(e.target)) {
+            nav.classList.remove('mobile-active');
+            toggle.querySelector('i').classList.remove('fa-times');
+            toggle.querySelector('i').classList.add('fa-bars');
+            document.body.style.overflow = 'auto';
+        }
+    });
+});
 
 // Add click-to-call functionality for phone numbers
 document.addEventListener('DOMContentLoaded', function() {
@@ -735,4 +783,231 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-console.log('Gallery functionality loaded successfully!');
+// Enhanced mobile optimizations
+document.addEventListener('DOMContentLoaded', function() {
+    // Detect mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        // Add mobile class to body
+        document.body.classList.add('mobile-device');
+        
+        // Optimize touch scrolling
+        document.body.style.webkitOverflowScrolling = 'touch';
+        
+        // Prevent zoom on input focus (iOS)
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                const viewport = document.querySelector('meta[name="viewport"]');
+                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            });
+            
+            input.addEventListener('blur', function() {
+                const viewport = document.querySelector('meta[name="viewport"]');
+                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
+            });
+        });
+        
+        // Optimize floating buttons for mobile
+        const whatsappFloat = document.querySelector('.whatsapp-float');
+        const callFloat = document.querySelector('.call-float');
+        
+        if (whatsappFloat) {
+            whatsappFloat.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            whatsappFloat.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+        }
+        
+        if (callFloat) {
+            callFloat.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+            
+            callFloat.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
+        }
+    }
+    
+    // Improve scroll performance
+    let ticking = false;
+    
+    function updateScrollEffects() {
+        const header = document.querySelector('.header');
+        const scrollTop = document.querySelector('.scroll-top');
+        
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(30, 41, 59, 0.95)';
+            header.style.backdropFilter = 'blur(15px)';
+        } else {
+            header.style.background = 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)';
+            header.style.backdropFilter = 'blur(15px)';
+        }
+        
+        if (scrollTop) {
+            if (window.scrollY > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        }
+        
+        ticking = false;
+    }
+    
+    function requestScrollUpdate() {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollEffects);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+    
+    // Optimize image loading
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src || img.src;
+                    img.classList.remove('lazy');
+                    observer.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    }
+    
+    // Add swipe gestures for gallery on mobile
+    if (isMobile) {
+        let startX = 0;
+        let startY = 0;
+        
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox) {
+            lightbox.addEventListener('touchstart', function(e) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            lightbox.addEventListener('touchend', function(e) {
+                const endX = e.changedTouches[0].clientX;
+                const endY = e.changedTouches[0].clientY;
+                const diffX = startX - endX;
+                const diffY = startY - endY;
+                
+                // Only trigger swipe if horizontal movement is greater than vertical
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                    if (diffX > 0) {
+                        nextImage(); // Swipe left - next image
+                    } else {
+                        prevImage(); // Swipe right - previous image
+                    }
+                }
+            }, { passive: true });
+        }
+    }
+    
+    // Optimize form submission for mobile
+    const contactForm = document.querySelector('.contact-form form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const button = this.querySelector('button');
+            const originalText = button.textContent;
+            
+            // Show loading state
+            button.textContent = 'Sending...';
+            button.disabled = true;
+            button.style.opacity = '0.7';
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const phone = this.querySelector('input[type="tel"]').value;
+            const message = this.querySelector('textarea').value;
+            
+            // Validation
+            if (!name || !email || !phone || !message) {
+                showMobileAlert('Please fill in all fields');
+                resetButton();
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMobileAlert('Please enter a valid email address');
+                resetButton();
+                return;
+            }
+            
+            const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
+            if (!phoneRegex.test(phone)) {
+                showMobileAlert('Please enter a valid phone number');
+                resetButton();
+                return;
+            }
+            
+            // Simulate form submission
+            setTimeout(() => {
+                showMobileAlert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+                resetButton();
+            }, 1500);
+            
+            function resetButton() {
+                button.textContent = originalText;
+                button.disabled = false;
+                button.style.opacity = '1';
+            }
+        });
+    }
+    
+    // Mobile-friendly alert function
+    function showMobileAlert(message) {
+        if (isMobile) {
+            // Create custom mobile alert
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'mobile-alert';
+            alertDiv.textContent = message;
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: linear-gradient(135deg, #1e293b, #334155);
+                color: white;
+                padding: 20px 30px;
+                border-radius: 15px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                z-index: 10000;
+                max-width: 90%;
+                text-align: center;
+                font-weight: 600;
+                border: 2px solid #06b6d4;
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.style.opacity = '0';
+                alertDiv.style.transform = 'translate(-50%, -50%) scale(0.9)';
+                setTimeout(() => {
+                    document.body.removeChild(alertDiv);
+                }, 300);
+            }, 3000);
+        } else {
+            alert(message);
+        }
+    }
+});
