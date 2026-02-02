@@ -9,7 +9,7 @@ A modern, responsive website for New Son Medical Store located in Pehati Ka Chau
 - Professional medical store branding
 
 ## Contact Information
-- **Phone**: +91 7905863291
+- **Phone**: +91 7705950290
 - **WhatsApp**: +91 7705950290
 - **Address**: Pehati Ka Chauraha, Mirzapur
 - **Proprietor**: प्रखर गुप्ता (Prakhar Gupta)

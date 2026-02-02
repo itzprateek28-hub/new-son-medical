@@ -186,14 +186,14 @@ function closeContactModal() {
 
 // Call store function
 function callStore() {
-    window.location.href = 'tel:+917905863291';
+    window.location.href = 'tel:+917705950290';
 }
 
 // Enhanced emergency contact functionality
 function callEmergency() {
     // Show confirmation for emergency call
     if (confirm('This will call our 24x7 emergency line. Continue?')) {
-        window.location.href = 'tel:+917905863291';
+        window.location.href = 'tel:+917705950290';
     }
 }
 
@@ -230,7 +230,7 @@ function openInGoogleMaps() {
 
 // Add emergency contact functionality
 function callEmergency() {
-    window.location.href = 'tel:+917905863291';
+    window.location.href = 'tel:+917705950290';
 }
 
 // Search functionality (basic)
@@ -470,6 +470,18 @@ const galleryImages = [
         placeholder: 'store-customers'
     },
     {
+        src: 'images/store-exterior-2.jpg',
+        title: 'Store Exterior',
+        description: 'Another view of our medical store',
+        placeholder: 'store-exterior'
+    },
+    {
+        src: 'images/store-night-view.jpg',
+        title: 'Store Night View',
+        description: 'Our store illuminated at night',
+        placeholder: 'night-view'
+    },
+    {
         src: 'images/store-signage.jpg',
         title: 'Store Signage',
         description: 'Clear signage showing all available medicines',
@@ -479,6 +491,36 @@ const galleryImages = [
         src: 'images/medicine-shelves.jpg',
         title: 'Medicine Shelves',
         description: 'Complete range of allopathic and ayurvedic medicines',
+        placeholder: 'medicine-shelves'
+    },
+    {
+        src: 'images/store-interior-1.jpg',
+        title: 'Store Interior',
+        description: 'Inside view of our well-organized medical store',
+        placeholder: 'interior-view'
+    },
+    {
+        src: 'images/store-interior-2.jpg',
+        title: 'Store Interior 2',
+        description: 'Another angle of our store interior',
+        placeholder: 'interior-view'
+    },
+    {
+        src: 'images/pharmacy-counter.jpg',
+        title: 'Pharmacy Counter',
+        description: 'Our professional service counter',
+        placeholder: 'interior-view'
+    },
+    {
+        src: 'images/medicine-display-1.jpg',
+        title: 'Medicine Display',
+        description: 'Wide variety of medicines on display',
+        placeholder: 'medicine-shelves'
+    },
+    {
+        src: 'images/medicine-display-2.jpg',
+        title: 'Medicine Display 2',
+        description: 'More medicines and health products',
         placeholder: 'medicine-shelves'
     }
 ];

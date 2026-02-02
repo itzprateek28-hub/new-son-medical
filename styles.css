@@ -3440,24 +3440,38 @@ body.loaded {
 
 /* Mobile adjustments for floating buttons */
 @media (max-width: 768px) {
+    /* Hide scroll to top button on mobile to prevent overlapping */
+    .scroll-top {
+        display: none !important;
+    }
+    
+    /* Add bottom padding to body to prevent content overlap with floating buttons */
+    body {
+        padding-bottom: 90px;
+    }
+    
     .whatsapp-float {
         bottom: 20px;
         right: 20px;
-        padding: 15px;
-        width: 60px;
-        height: 60px;
+        padding: 18px;
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
         justify-content: center;
+        box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+        z-index: 1001;
     }
     
     .call-float {
-        bottom: 90px;
+        bottom: 100px;
         right: 20px;
-        padding: 15px;
-        width: 60px;
-        height: 60px;
+        padding: 18px;
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
         justify-content: center;
+        box-shadow: 0 6px 25px rgba(6, 182, 212, 0.4);
+        z-index: 1001;
     }
     
     .whatsapp-text,
@@ -3467,34 +3481,45 @@ body.loaded {
     
     .whatsapp-float i,
     .call-float i {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        color: white;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
     }
     
-    /* Ensure floating buttons don't interfere with content */
-    .whatsapp-float,
-    .call-float {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    /* Ensure footer doesn't overlap with floating buttons */
+    .footer {
+        padding-bottom: 100px;
     }
     
     /* Better positioning for small screens */
     @media (max-width: 480px) {
+        body {
+            padding-bottom: 80px;
+        }
+        
         .whatsapp-float {
             bottom: 15px;
             right: 15px;
-            width: 55px;
-            height: 55px;
+            width: 65px;
+            height: 65px;
+            padding: 16px;
         }
         
         .call-float {
-            bottom: 80px;
+            bottom: 90px;
             right: 15px;
-            width: 55px;
-            height: 55px;
+            width: 65px;
+            height: 65px;
+            padding: 16px;
         }
         
         .whatsapp-float i,
         .call-float i {
-            font-size: 1.3rem;
+            font-size: 1.6rem;
+        }
+        
+        .footer {
+            padding-bottom: 90px;
         }
     }
 }
