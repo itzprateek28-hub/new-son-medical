@@ -287,24 +287,6 @@ function subscribeNewsletter(email) {
 }
 
 console.log('New Son Medical Store website loaded successfully!');
-// Scroll to top functionality
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-// Show/hide scroll to top button
-window.addEventListener('scroll', function() {
-    const scrollTop = document.querySelector('.scroll-top');
-    if (window.scrollY > 300) {
-        scrollTop.classList.add('visible');
-    } else {
-        scrollTop.classList.remove('visible');
-    }
-});
-
 // Enhanced header scroll effect with gradient
 window.addEventListener('scroll', function() {
     const header = document.querySelector('.header');
@@ -503,12 +485,6 @@ const galleryImages = [
         src: 'images/store-interior-2.jpg',
         title: 'Store Interior 2',
         description: 'Another angle of our store interior',
-        placeholder: 'interior-view'
-    },
-    {
-        src: 'images/pharmacy-counter.jpg',
-        title: 'Pharmacy Counter',
-        description: 'Our professional service counter',
         placeholder: 'interior-view'
     },
     {
@@ -881,7 +857,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function updateScrollEffects() {
         const header = document.querySelector('.header');
-        const scrollTop = document.querySelector('.scroll-top');
         
         if (window.scrollY > 100) {
             header.style.background = 'rgba(30, 41, 59, 0.95)';
@@ -889,14 +864,6 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             header.style.background = 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)';
             header.style.backdropFilter = 'blur(15px)';
-        }
-        
-        if (scrollTop) {
-            if (window.scrollY > 300) {
-                scrollTop.classList.add('visible');
-            } else {
-                scrollTop.classList.remove('visible');
-            }
         }
         
         ticking = false;
